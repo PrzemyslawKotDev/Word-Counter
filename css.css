@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+    background-color: rgb(221, 223, 224);
+}
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 1% 0;
+}
+#input {
+    height: 45vh;
+    width: 100%;
+    border: dashed 2px red;
+}
+#input:focus{
+    outline: none !important;
+    border: double 2px red;
+}
+#start{
+    margin: 10px;
+    height: 30px;
+    width: 50%;
+}
+#count {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    width: 95%;
+}
+#words {
+    width: 100%;
+    border: solid 2px green;
+}
+#word{
+    padding: 5px;
+    border: solid 1px green;
+}
+#instructions{
+    font-size: 1.2em;
+    font-weight: 700;
+}

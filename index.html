@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="./css.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilość wyrazów</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script type="text/babel">
+class Licznik extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = { 
+            text:[],
+            words: [],
+            display: ""
+        }
+    } 
+handleChange(e){
+this.setState({
+    text: [e.target.value],
+    words: this.state.words,
+    display: this.state.display
+})};
+justWords(){
+    const regEx = /(\x2E|\x21|\n|\x22|\x23|\x24|\x26|\x28|\x29|\x2C|\x2D|\x3A|\x3B|\x3D|\x3F|\x40|\x5B|\x5D|\x7C|\x20)/gi
+    const reduced = this.state.text.map((item)=>{
+        item = item.toUpperCase();
+         return item.split(regEx)
+        });
+    const replaced = reduced[0].map((item)=>{
+         return item.replace(regEx, " ")
+        });
+    const filtered = replaced.filter(element => !(" ").includes(element));
+    const occurrences = filtered.reduce(function (acc, curr) {
+  return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+}, {});
+let sortable = [];
+for (let item in occurrences) {
+    sortable.push([item, occurrences[item]]);
+};
+sortable.sort(function(a, b) {
+    return b[1] - a[1];
+});
+this.setState({
+    text: this.state.text,
+    words: sortable,
+    display: this.state.display
+})};
+render(){
+        return (
+        <div id="count">
+            <p id="instructions">Wpisz w czerwone pole tekst oraz naciśnij start.</p>
+            <textarea id="input" onChange={this.handleChange.bind(this)}/>
+            <button id="start" onClick={this.justWords.bind(this)}>Start</button>
+            <div id="words">
+                {this.state.words.map((item)=> <div id="word">{`Słowo "${item[0]}" pojawiło się: ${item[1]} razy.`}</div>)}
+            </div>
+        </div>
+        );
+}};
+ReactDOM.render(<Licznik />, document.getElementById("container"));
+    </script>
+</body>
+</html>
